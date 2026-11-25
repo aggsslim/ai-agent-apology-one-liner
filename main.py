@@ -19,6 +19,13 @@ def main() -> None:
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
         f.write(ENTRY)
+    # Verify the write: read back and check it matches ENTRY and the gate.
+    with open("/output/entry.txt", "r", encoding="utf-8", newline="") as f:
+        written = f.read()
+    if written != ENTRY:
+        raise SystemExit("error: /output/entry.txt does not match ENTRY")
+    if not 1 <= len(written) <= 159:
+        raise SystemExit(f"error: entry length {len(written)} outside 1-159 chars")
 
 
 if __name__ == "__main__":
